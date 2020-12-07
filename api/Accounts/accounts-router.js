@@ -3,9 +3,9 @@ const { validateID, validateAccountBody } = require('./accounts-middleware')
 const router = express.Router()
 const Accounts = require('./accounts-model')
 
-router.get('/', async (_, res) => {
+router.get('/', async (req, res) => {
     try {
-        const data = await Accounts.getAll()
+        const data = await Accounts.getAll(req.query)
         res.status(200).json(data)
     } catch (error) {
         res.status(500).json({ message: error.message})
