@@ -12,5 +12,8 @@ module.exports = {
             .then(([id]) => {
                 return db('accounts').where('id', id).first()
             })
+    },
+    update(id, changes){
+        return db('accounts').where('id', id).update(changes)
     }
 }
