@@ -6,5 +6,11 @@ module.exports = {
     },
     getById(id){
         return db('accounts').where('id', id).first()
+    },
+    create(account){
+        return db('accounts').insert(account)
+            .then(([id]) => {
+                return db('accounts').where('id', id).first()
+            })
     }
 }

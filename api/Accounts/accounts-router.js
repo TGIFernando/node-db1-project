@@ -1,5 +1,5 @@
 const express = require('express')
-const { validateID } = require('./accounts-middleware')
+const { validateID, validateAccountBody } = require('./accounts-middleware')
 const router = express.Router()
 const Accounts = require('./accounts-model')
 
@@ -12,10 +12,19 @@ router.get('/', async (_, res) => {
     }
 })
 
-router.get('/:id', validateID,async (req, res) => {
+router.get('/:id', validateID, async (req, res) => {
     try {
         const { id } = req.params
         const data = await Accounts.getById(id)
+        res.status(200).json(data)
+    } catch (error) {
+        res.status(500).json({ message: error.message})
+    }
+})
+
+router.post('/', validateAccountBody, async (req, res) => {
+    try {
+        const data = await Accounts.create(req.body)
         res.status(200).json(data)
     } catch (error) {
         res.status(500).json({ message: error.message})
