@@ -40,4 +40,13 @@ router.put('/:id', validateAccountBody, validateID, async (req, res) => {
     }
 })
 
+router.delete('/:id', validateID, async (req, res) => {
+    try {
+        await Accounts.delete(req.id)
+        res.status(200).json({message: `Account with id ${req.id} has been nuked`})
+    } catch (error) {
+        res.status(500).json({ message: error.message})
+    }
+})
+
 module.exports = router
